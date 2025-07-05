@@ -7,7 +7,10 @@ const readCommands = require('./utilities/readCommands.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 const commandsFolderPath = path.join(__dirname, 'commands');
-client.commands = new Collection(readCommands(commandsFolderPath));
+commands = readCommands(commandsFolderPath);
+client.commands = new Collection(
+	commands.map(cmd => [cmd.data.name, cmd])
+);
 
 client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
@@ -17,9 +20,9 @@ client.login(token);
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-	console.log(interaction);
+    console.log(`received an interaction from ${interaction.user.username} at ${interaction.member.guild.name}`)
 
-	const command = interaction.client.commands.get(interaction.commandName);
+    const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
 		console.error(`no command matching ${interaction.commandName} was found!`);

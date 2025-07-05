@@ -4,7 +4,7 @@ const { clientId, guildId, token } = require('./identity.json');
 const path = require('node:path');
 
 const commandsFolderPath = path.join(__dirname, 'commands');
-const commands = readCommands(commandsFolderPath);
+const commands = readCommands(commandsFolderPath).map(cmd => cmd.data.toJSON());
 
 const rest = new REST().setToken(token);
 
