@@ -1,26 +1,26 @@
 {
-  "name": "toadster",
-  "version": "0.0.1",
-  "description": "(does not make toast)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node deploy-commands.js && node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/hs7t/toadster.git"
-  },
-  "author": "@hs7t",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hs7t/toadster/issues"
-  },
-  "homepage": "https://github.com/hs7t/toadster#readme",
-  "devDependencies": {
-    "prettier": "^3.6.2"
-  },
-  "dependencies": {
-    "discord.js": "^14.21.0"
-  }
+    "name": "toadster",
+    "version": "0.0.1",
+    "description": "(does not make toast)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node deploy-commands.js && node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/hs7t/toadster.git"
+    },
+    "author": "@hs7t",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/hs7t/toadster/issues"
+    },
+    "homepage": "https://github.com/hs7t/toadster#readme",
+    "devDependencies": {
+        "prettier": "^3.6.2"
+    },
+    "dependencies": {
+        "discord.js": "^14.21.0"
+    }
 }
