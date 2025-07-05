@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/hs7t/toadster/issues"
   },
-  "homepage": "https://github.com/hs7t/toadster#readme"
+  "homepage": "https://github.com/hs7t/toadster#readme",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "discord.js": "^14.21.0"
+  }
 }
