@@ -18,7 +18,7 @@ module.exports = {
         for (const character of input) {
             if (!/^[a-zA-Z]$/.test(character)) {
                 output += character
-                
+
                 i = 0
                 continue
             } else if (i % 2 === 0) {
