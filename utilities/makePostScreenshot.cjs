@@ -6,8 +6,25 @@ module.exports = async function makePostScreenshot(
     username,
     pfp_url,
     post_content,
-    img_width,
+    img_width = 1024,
 ) {
+    /**
+     *    Makes a 'post screenshot'
+     *    @async
+     *    @param {string} username - a short identification string
+     *    @param {string} pfp_url - a URL to a square-sized image
+     *    @param {string} post_content - the content of the post
+     *    @param {number} img_width - the width for the resulting image
+     *
+     *    @return {Promise<Buffer>} an image buffer
+     *
+     *    @example makePostScreenshot(
+     *        "mikey",
+     *        "awesome.website/image.png",
+     *        "I bet on losing dogs",
+     *        1024
+     *    )
+     */
     const generateSatoriSvg = await import('./generateSatoriSvg.mjs').then(
         (m) => m.default,
     )
@@ -62,6 +79,9 @@ module.exports = async function makePostScreenshot(
                         children: [
                             {
                                 type: 'img',
+                                style: {
+                                    borderRadius: 1000,
+                                },
                                 props: {
                                     src: `${pfp_url}`,
                                     width: 60,
@@ -114,11 +134,5 @@ module.exports = async function makePostScreenshot(
     const pngData = resvg.render()
     const pngBuffer = pngData.asPng()
 
-    fs.writeFile('./temp_output.png', pngBuffer, (err) => {
-        if (err) {
-            console.error(err)
-        } else {
-            console.log('File written successfully!')
-        }
-    })
+    return await pngBuffer
 }
