@@ -6,7 +6,7 @@ module.exports = {
         .setDescription('info about this server'),
     async execute(interaction) {
         await interaction.reply(
-            `this server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members! also, i'm in it!`,
+            `this server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members! and I'm in it!`,
         )
     },
 }
