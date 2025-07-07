@@ -87,7 +87,7 @@ module.exports = async function makeFramedPost(
                             display: 'flex',
                             padding: '2rem',
                             backgroundColor: `${frame_color}`,
-                            boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+                            boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.55)',
                         },
                         children: [
                             {
@@ -99,7 +99,7 @@ module.exports = async function makeFramedPost(
                                         padding: '3rem',
                                         backgroundColor: `${primary_background_color}`,
                                         color: `${text_color}`,
-                                        border: `5pt solid rgb(225, 225, 225)`,
+                                        border: `3pt solid rgb(235, 235, 235)`,
                                         boxShadow: `0px 0px 10px 0px rgba(153, 153, 153, 0.25) inset`,
                                         width: '100%',
                                     },
