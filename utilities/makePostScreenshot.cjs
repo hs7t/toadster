@@ -1,12 +1,16 @@
 const path = require('node:path')
 const fs = require('node:fs')
-import satori from 'satori'
 const { Resvg } = require('@resvg/resvg-js')
 
-async function main() {
-    let username = 'blank'
-    let pfp_url = 'https://www.bestimages.website.gov.url/wow.png'
-    let post_content = 'Hello, world!'
+module.exports = async function makePostScreenshot(
+    username,
+    pfp_url,
+    post_content,
+    img_width,
+) {
+    const generateSatoriSvg = await import('./generateSatoriSvg.mjs').then(
+        (m) => m.default,
+    )
 
     const fonts = {
         medium: fs.readFileSync(
@@ -18,8 +22,7 @@ async function main() {
     }
 
     const satoriOptions = {
-        width: 800,
-        height: 400,
+        width: img_width,
         embedFont: true,
         fonts: [
             {
@@ -35,7 +38,7 @@ async function main() {
         ],
     }
 
-    const post_tree = {
+    const postTree = {
         type: 'div',
         props: {
             style: {
@@ -92,8 +95,6 @@ async function main() {
         },
     }
 
-    const postSvg = await satori(post_tree, satoriOptions)
-
     const resvgOptions = {
         font: {
             loadSystemFonts: false,
@@ -101,13 +102,19 @@ async function main() {
                 '../assets/fonts/national_park/medium.woff2',
                 '../assets/fonts/national_park/regular.woff2',
             ],
+            fitTo: {
+                mode: 'original',
+            },
         },
     }
 
+    const postSvg = await generateSatoriSvg(postTree, satoriOptions)
+
     const resvg = new Resvg(postSvg, resvgOptions)
-    const resvgJS = new resvg.Resvg(postSvg, resvgOptions)
-    const pngData = resvgJS.render(postSvg, resvgJS) // Output PNG data, Uint8Array
-    fs.writeFile('./temp_output.png', pngData, (err) => {
+    const pngData = resvg.render()
+    const pngBuffer = pngData.asPng()
+
+    fs.writeFile('./temp_output.png', pngBuffer, (err) => {
         if (err) {
             console.error(err)
         } else {
@@ -115,4 +122,3 @@ async function main() {
         }
     })
 }
-main()
