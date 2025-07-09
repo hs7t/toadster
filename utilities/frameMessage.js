@@ -1,75 +1,41 @@
-const path = require('node:path')
-const fs = require('node:fs')
-const { Resvg } = require('@resvg/resvg-js')
+const makeCompositionImage = require('./makeCompositionImage.cjs')
 
-module.exports = async function makeFramedPost(
-    username,
-    pfp_url,
-    post_content,
-    post_title = 'Untitled',
-    post_author = undefined,
-    post_date = '01/01/1000',
-    img_width = 1024,
+async function frameMessage(
+    author_username,
+    author_avatar_url,
+    author_display_name = undefined,
+    title = 'Untitled',
+    content,
+    date = '??/??/????',
     frame_color = '#1f1f1f',
     primary_background_color = '#ffffff',
     background_color = '#e1e1e1',
     text_color = '#000000',
+    output_width = 1024,
 ) {
     /**
-     *    Makes a 'post screenshot'
-     *    @async
-     *    @param {string} username - a short identification string
-     *    @param {string} pfp_url - a URL to a square-sized image
-     *    @param {string} post_content - the content of the post
-     *    @param {string} post_title - a title to be shown
-     *    @param {string} date - an XX/ZZ/YYYY string
+     * Creates a museum-like framed view of a message
+     * @async
      *
-     *    @param {number} img_width - the width for the resulting image
+     * @param {string} author_username - a short ID for the message
+     * @param {string} author_avatar_url - a URL to a 1x1 image
+     * @param {string} author_display_name - a short author name for the piece
+     * @param {string} title - a short title for the piece
+     * @param {string} content - the content of the message
+     * @param {string} date - a date for the piece
+     * @param {string} frame_color - HEX for the post's frame
+     * @param {string} primary_background_color - HEX for the post and piece plaque's background
+     * @param {string} background_color - HEX for the background
+     * @param {string} text_color - HEX to be used for text throughout the composition
+     * @param {number} output_width - px width for the resulting image (advancedopt)
      *
-     *    @return {Promise<Buffer>} an image buffer
-     *
-     *    @example makePostScreenshot(
-     *        "mikey",
-     *        "awesome.website/image.png",
-     *        "I bet on losing dogs",
-     *        "01/12/2025",
-     *        1024
-     *    )
+     * @returns PNG buffer
      */
 
-    post_author = post_author.toUpperCase() ?? username.toUpperCase()
+    author_display_name =
+        author_display_name.toUpperCase() ?? author_username.toUpperCase()
 
-    const generateSatoriSvg = await import('./generateSatoriSvg.mjs').then(
-        (m) => m.default,
-    )
-
-    const fonts = {
-        medium: fs.readFileSync(
-            path.resolve('../assets/fonts/national_park/medium.otf'),
-        ),
-        regular: fs.readFileSync(
-            path.resolve('../assets/fonts/national_park/regular.otf'),
-        ),
-    }
-
-    const satoriOptions = {
-        width: img_width,
-        embedFont: true,
-        fonts: [
-            {
-                name: 'National Park',
-                data: fonts.regular,
-                weight: 400,
-            },
-            {
-                name: 'National Park',
-                data: fonts.medium,
-                weight: 500,
-            },
-        ],
-    }
-
-    const postTree = {
+    const composition_tree = {
         type: 'div',
         props: {
             style: {
@@ -128,7 +94,7 @@ module.exports = async function makeFramedPost(
                                                                 {
                                                                     type: 'img',
                                                                     props: {
-                                                                        src: `${pfp_url}`,
+                                                                        src: `${author_avatar_url}`,
                                                                         width: 60,
                                                                         height: 60,
                                                                     },
@@ -143,7 +109,7 @@ module.exports = async function makeFramedPost(
                                                                 fontSize: 34,
                                                                 fontWeight: 500,
                                                             },
-                                                            children: `${username}`,
+                                                            children: `${author_username}`,
                                                         },
                                                     },
                                                 ],
@@ -156,7 +122,7 @@ module.exports = async function makeFramedPost(
                                                     fontSize: 40,
                                                     width: '100%',
                                                 },
-                                                children: `${post_content}`,
+                                                children: `${content}`,
                                             },
                                         },
                                     ],
@@ -185,7 +151,7 @@ module.exports = async function makeFramedPost(
                                         fontSize: '24px',
                                         margin: 0,
                                     },
-                                    children: `${post_author}`,
+                                    children: `${author_display_name}`,
                                 },
                             },
                             {
@@ -195,7 +161,7 @@ module.exports = async function makeFramedPost(
                                         fontSize: '18px',
                                         margin: 0,
                                     },
-                                    children: `'${post_title}'`,
+                                    children: `'${title}'`,
                                 },
                             },
                             {
@@ -205,7 +171,7 @@ module.exports = async function makeFramedPost(
                                         fontSize: '18px',
                                         margin: 0,
                                     },
-                                    children: `${post_date}`,
+                                    children: `${date}`,
                                 },
                             },
                         ],
@@ -214,24 +180,6 @@ module.exports = async function makeFramedPost(
             ],
         },
     }
-    const resvgOptions = {
-        font: {
-            loadSystemFonts: false,
-            fontFiles: [
-                '../assets/fonts/national_park/medium.woff2',
-                '../assets/fonts/national_park/regular.woff2',
-            ],
-            fitTo: {
-                mode: 'original',
-            },
-        },
-    }
 
-    const postSvg = await generateSatoriSvg(postTree, satoriOptions)
-
-    const resvg = new Resvg(postSvg, resvgOptions)
-    const pngData = resvg.render()
-    const pngBuffer = pngData.asPng()
-
-    return await pngBuffer
+    return makeCompositionImage(composition_tree, output_width)
 }
