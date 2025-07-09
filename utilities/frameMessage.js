@@ -183,3 +183,5 @@ async function frameMessage(
 
     return makeCompositionImage(composition_tree, output_width)
 }
+
+module.exports = frameMessage
