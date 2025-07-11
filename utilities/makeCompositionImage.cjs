@@ -1,6 +1,7 @@
 const path = require('node:path')
 const fs = require('node:fs')
 const { Resvg } = require('@resvg/resvg-js')
+const { Buffer } = require('node:buffer')
 
 module.exports = async function makeCompositionImage(
     composition_tree,
@@ -23,15 +24,34 @@ module.exports = async function makeCompositionImage(
         (m) => m.default,
     )
 
-    if ((satori_options = undefined)) {
-        const satoriFonts = {
-            medium: fs.readFileSync(
-                path.resolve('../assets/fonts/national_park/medium.otf'),
+    // Screw node.js who said that
+    const __dirname = path.dirname(__filename)
+
+    const satoriFonts = {
+        medium: fs.readFileSync(
+            path.resolve(
+                path.join(
+                    __dirname,
+                    '..',
+                    'assets',
+                    'fonts',
+                    'national_park',
+                    'medium.otf',
+                ),
             ),
-            regular: fs.readFileSync(
-                path.resolve('../assets/fonts/national_park/regular.otf'),
+        ),
+        regular: fs.readFileSync(
+            path.resolve(
+                path.join(
+                    __dirname,
+                    '..',
+                    'assets',
+                    'fonts',
+                    'national_park',
+                    'regular.otf',
+                ),
             ),
-        }
+        ),
     }
 
     satori_options = satori_options ?? {
@@ -55,8 +75,22 @@ module.exports = async function makeCompositionImage(
         font: {
             loadSystemFonts: false,
             fontFiles: [
-                '../assets/fonts/national_park/medium.woff2',
-                '../assets/fonts/national_park/regular.woff2',
+                path.join(
+                    __dirname,
+                    '..',
+                    'assets',
+                    'fonts',
+                    'national_park',
+                    'medium.woff2',
+                ),
+                path.join(
+                    __dirname,
+                    '..',
+                    'assets',
+                    'fonts',
+                    'national_park',
+                    'regular.woff2',
+                ),
             ],
             fitTo: {
                 mode: 'original',
@@ -68,7 +102,8 @@ module.exports = async function makeCompositionImage(
 
     const resvg = new Resvg(satoriSvg, resvg_options)
     const pngData = resvg.render()
-    const pngBuffer = pngData.asPng()
+    const pngBuffer = Buffer.from(pngData.asPng())
+    console.log(pngBuffer)
 
     return await pngBuffer
 }

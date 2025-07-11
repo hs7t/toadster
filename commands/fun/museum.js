@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, MessageAttachment } = require('discord.js')
+const {
+    SlashCommandBuilder,
+    AttachmentBuilder,
+    EmbedBuilder,
+} = require('discord.js')
 const frameMessage = require('../../utilities/frameMessage.js')
 
 module.exports = {
@@ -25,6 +29,7 @@ module.exports = {
         ),
 
     async execute(interaction) {
+        await interaction.deferReply()
         const today = new Date()
         workingMessage = {
             url: interaction.options.getString('message-url'),
@@ -45,7 +50,7 @@ module.exports = {
 
         piece = {
             title: interaction.options.getString('input') ?? 'Untitled',
-            date: `${today.getDate}/${today.getMonth}/${today.getFullYear}`,
+            date: `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`,
             message: {
                 content: workingMessage.obj.content,
             },
@@ -54,11 +59,13 @@ module.exports = {
                 display_name:
                     workingMessage.obj.member.nickname ??
                     workingMessage.obj.author.displayName,
-                avatar_url: workingMessage.obj.author.avatarURL('png') ?? '',
+                avatar_url:
+                    workingMessage.obj.author.avatarURL({ extension: 'png' }) ??
+                    '',
             },
         }
 
-        const pngBuffer = frameMessage(
+        const pngBuffer = await frameMessage(
             piece.author.username,
             piece.author.avatar_url,
             piece.author.display_name,
@@ -66,10 +73,20 @@ module.exports = {
             piece.message.content,
             piece.date,
         )
-        const attachment = new MessageAttachment()
-        console.log(workingMessage)
-        console.log(piece)
-        // console.log(interaction)
-        await interaction.reply({ embeds: [] })
+
+        const responseAttachment = new AttachmentBuilder(pngBuffer)
+            .setName('museum_view.png')
+            .setDescription(
+                `A dramatic, museum-like display of a message by ${piece.author.display_name}. It reads: ${piece.message.content}. A plaque below contains the author's name, the title ("${piece.title}") and the date ("${piece.date}")`,
+            )
+
+        const responseEmbed = new EmbedBuilder().setImage(
+            'attachment://museum_view.png',
+        )
+
+        await interaction.editReply({
+            embeds: [responseEmbed],
+            files: [responseAttachment],
+        })
     },
 }
