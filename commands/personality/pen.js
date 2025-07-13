@@ -39,7 +39,7 @@ module.exports = {
                     content: 'ribeep! letter received',
                     ephemeral: true,
                 })
-                print(letter.rating)
+                console.log(letter.rating)
             })
             .catch((error) => {
                 console.error(`something bad happened: ${error}`)
