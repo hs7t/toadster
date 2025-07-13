@@ -23,6 +23,7 @@
     "dependencies": {
         "@resvg/resvg-js": "^2.6.2",
         "discord.js": "^14.21.0",
-        "satori": "^0.15.2"
+        "satori": "^0.15.2",
+        "sentiment": "^5.0.2"
     }
 }
