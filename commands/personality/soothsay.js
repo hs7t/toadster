@@ -1,4 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
+const getRandomIndex = require('../../utilities/getRandomIndex.js')
+
 const getRandomInteger = require('../../utilities/getRandomInteger.js')
 const OMENS = [
     'definitely, yes!',
@@ -18,6 +20,6 @@ module.exports = {
         .setName('soothsay')
         .setDescription('says whether something will happen'),
     async execute(interaction) {
-        await interaction.reply(OMENS[getRandomInteger(OMENS.length - 1)])
+        await interaction.reply(getRandomIndex(OMENS))
     },
 }
