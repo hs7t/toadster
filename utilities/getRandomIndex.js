@@ -1,5 +1,7 @@
-const getRandomInteger = import('./getRandomInteger.js')
+const getRandomInteger = require('./getRandomInteger.js')
 
-export function getRandomIndex(array) {
+function getRandomItem(array) {
     return array[getRandomInteger(array.length - 1)]
 }
+
+module.exports = getRandomItem
