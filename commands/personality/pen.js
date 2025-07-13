@@ -15,7 +15,7 @@ const LETTER_CONTENT_INPUT_ID = 'letterContentInput'
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pen')
-        .setDescription('lets you pen a letter!'),
+        .setDescription('pen a letter to toadster!'),
     async execute(interaction) {
         var letter = {}
         const modal = createModal()
@@ -39,6 +39,7 @@ module.exports = {
                     content: 'ribeep! letter received',
                     ephemeral: true,
                 })
+                print(letter.rating)
             })
             .catch((error) => {
                 console.error(`something bad happened: ${error}`)
