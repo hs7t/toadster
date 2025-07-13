@@ -7,8 +7,8 @@ const frameMessage = require('../../utilities/frameMessage.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('museum')
-        .setDescription('puts a message in a museum')
+        .setName('frame')
+        .setDescription('frames your message in a museum')
         .addStringOption((option) =>
             option
                 .setName('message-url')
