@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js')
 const { EmbedBuilder } = require('discord.js')
 const getRandomItem = require('../../utilities/getRandomIndex.js')
 
-const OBJECTS = [
+const ITEMS = [
     {
         id: 'golden_ball',
         title: 'golden ball',
@@ -42,7 +42,7 @@ const OBJECTS = [
     {
         id: 'bread',
         title: 'bread',
-        description: 'do NOT feed toadster',
+        description: 'do NOT feed to toadster',
         emoji: '🍞',
     },
 ]
@@ -51,6 +51,14 @@ module.exports = {
         .setName('fetch')
         .setDescription('fetches an item for you'),
     async execute(interaction) {
-        await interaction.reply('ribbit!')
+        const item = getRandomItem(ITEMS)
+        const responseEmbed = new EmbedBuilder()
+            .setTitle('toadster has fetched something!')
+            .addFields({ name: item.title, value: item.description })
+            .setFooter({ text: `enjoy!` })
+            .setTimestamp()
+            .setColor('#d1f0ff')
+
+        interaction.reply({ embeds: [responseEmbed] })
     },
 }
