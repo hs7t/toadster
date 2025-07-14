@@ -1,7 +1,8 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 const getRandomIndex = require('../../utilities/getRandomIndex.js')
 
 const getRandomInteger = require('../../utilities/getRandomInteger.js')
+
 const OMENS = [
     'definitely, yes!',
     'ribbit (it is likely)',
@@ -14,12 +15,20 @@ const OMENS = [
     "i don't think so...",
     'perhaps?',
 ]
+const TITLES = ['clairvoyant', 'toadsterest', 'awesome', 'toad-machine']
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('soothsay')
         .setDescription('says whether something will happen'),
     async execute(interaction) {
-        await interaction.reply(getRandomIndex(OMENS))
+        responseEmbed = new EmbedBuilder()
+            .addFields({
+                name: `toadster, ${getRandomIndex(TITLES)}, thinks...`,
+                value: getRandomIndex(OMENS),
+            })
+            .setColor('#d1dbff')
+
+        await interaction.reply({ embeds: [responseEmbed] })
     },
 }
