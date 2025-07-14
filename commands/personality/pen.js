@@ -86,7 +86,11 @@ module.exports = {
                 responseEmbed
                     .addFields({
                         name: selectedResponse.title,
-                        value: selectedResponse.subtitle ?? '\u200B',
+                        value:
+                            selectedResponse.subtitle.replace(
+                                '%[highlight]',
+                                getRandomItem(letter.rating.positive),
+                            ) ?? '\u200B',
                     })
                     .setColor('#DCFFD1')
 
