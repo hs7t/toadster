@@ -62,8 +62,6 @@ module.exports = {
         const filter = (i) =>
             i.customId === 'letterContent' && i.user.id === interaction.user.id
 
-        const responseEmbed = new EmbedBuilder()
-
         interaction
             .awaitModalSubmit({ filter, time: 120_000 })
             .then(async (submission) => {
@@ -83,10 +81,11 @@ module.exports = {
                     selectedResponse = getRandomItem(RESPONSES.negative)
                 }
 
+                const responseEmbed = new EmbedBuilder()
+
                 responseEmbed
-                    .setTitle(selectedResponse.title)
                     .addFields({
-                        name: '\u200B',
+                        name: selectedResponse.title,
                         value: selectedResponse.subtitle ?? '\u200B',
                     })
                     .setColor('#DCFFD1')
