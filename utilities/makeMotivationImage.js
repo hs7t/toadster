@@ -2,6 +2,7 @@ const makeCompositionImage = require('./makeCompositionImage.cjs')
 const getRandomIndex = require('./getRandomIndex.js')
 
 const path = require('node:path')
+const fs = require('node:fs')
 
 function getBase64(file_path, mime_type = 'image/jpeg') {
     const fullPath = path.resolve(__dirname, file_path)
@@ -44,7 +45,10 @@ const assets = {
             ),
         },
         einstein: {
-            path: getBase64('../assets/images/inspiration/einstein.jpg'),
+            path: getBase64(
+                '../assets/images/inspiration/einstein.png',
+                (mime_type = 'image/png'),
+            ),
             buffer: fs.readFileSync(
                 path.resolve(
                     path.join(
@@ -53,7 +57,7 @@ const assets = {
                         'assets',
                         'images',
                         'inspiration',
-                        'einstein.jpg',
+                        'einstein.png',
                     ),
                 ),
             ),
@@ -124,6 +128,7 @@ const assets = {
                     ),
                 },
             },
+            name: 'National Park',
         },
         jacques_francois: {
             files: {
@@ -135,7 +140,7 @@ const assets = {
                                 '..',
                                 'assets',
                                 'fonts',
-                                'national_park',
+                                'jacques_francois',
                                 'regular.otf',
                             ),
                         ),
@@ -154,6 +159,7 @@ const assets = {
                     ),
                 },
             },
+            name: 'Jacques Francois',
         },
         italianno: {
             files: {
@@ -184,12 +190,13 @@ const assets = {
                     ),
                 },
             },
+            name: 'Italianno',
         },
     },
 }
 
 async function makeMotivationImage(quote, author = undefined) {
-    const layouts = {
+    var layouts = {
         inspo: {
             tree: {
                 type: 'div',
@@ -369,6 +376,47 @@ async function makeMotivationImage(quote, author = undefined) {
         },
     }
 
-    const selectedLayout = getRandomIndex(layouts)
+    layouts.inspo.options.satori = {
+        width: layouts.inspo.props.width,
+        embedFont: true,
+        fonts: [
+            {
+                name: assets.fonts.national_park.name,
+                data: assets.fonts.national_park.paths.woff.regular,
+                weight: 400,
+            },
+            {
+                name: assets.fonts.national_park.name,
+                data: assets.fonts.national_park.paths.woff.medium,
+                weight: 500,
+            },
+        ],
+    }
+
+    layouts.einstein.options.satori = {
+        width: layouts.einstein.props.width,
+        embedFont: true,
+        fonts: [
+            {
+                name: assets.fonts.jacques_francois.name,
+                data: assets.fonts.jacques_francois.paths.woff.regular,
+                weight: 400,
+            },
+        ],
+    }
+
+    layouts.freedom.options.satori = {
+        width: layouts.freedom.props.width,
+        embedFont: true,
+        fonts: [
+            {
+                name: assets.fonts.italianno.name,
+                data: assets.fonts.italianno.paths.woff.regular,
+                weight: 400,
+            },
+        ],
+    }
+
+    const selectedLayout = getRandomIndex(Object.keys(layouts))
     return makeCompositionImage(selectedLayout.tree, selectedLayout.props.width)
 }
