@@ -376,18 +376,19 @@ async function makeMotivationImage(quote, author = undefined) {
         },
     }
 
+    // Satori options
     layouts.inspo.options.satori = {
         width: layouts.inspo.props.width,
         embedFont: true,
         fonts: [
             {
                 name: assets.fonts.national_park.name,
-                data: assets.fonts.national_park.paths.woff.regular,
+                data: assets.fonts.national_park.files.otf.regular,
                 weight: 400,
             },
             {
                 name: assets.fonts.national_park.name,
-                data: assets.fonts.national_park.paths.woff.medium,
+                data: assets.fonts.national_park.files.otf.medium,
                 weight: 500,
             },
         ],
@@ -399,7 +400,7 @@ async function makeMotivationImage(quote, author = undefined) {
         fonts: [
             {
                 name: assets.fonts.jacques_francois.name,
-                data: assets.fonts.jacques_francois.paths.woff.regular,
+                data: assets.fonts.jacques_francois.files.otf.regular,
                 weight: 400,
             },
         ],
@@ -411,12 +412,57 @@ async function makeMotivationImage(quote, author = undefined) {
         fonts: [
             {
                 name: assets.fonts.italianno.name,
-                data: assets.fonts.italianno.paths.woff.regular,
+                data: assets.fonts.italianno.files.otf.regular,
                 weight: 400,
             },
         ],
     }
 
+    // reSVG options
+    layouts.inspo.options.resvg = {
+        width: layouts.inspo.props.width,
+        embedFont: true,
+        font: {
+            loadSystemFonts: false,
+            fontFiles: [
+                assets.fonts.national_park.paths.woff.regular,
+                assets.fonts.national_park.paths.woff.medium,
+            ],
+        },
+        fitTo: {
+            mode: 'original',
+        },
+    }
+
+    layouts.einstein.options.resvg = {
+        width: layouts.inspo.props.width,
+        embedFont: true,
+        font: {
+            loadSystemFonts: false,
+            fontFiles: [assets.fonts.jacques_francois.paths.woff.regular],
+        },
+        fitTo: {
+            mode: 'original',
+        },
+    }
+
+    layouts.freedom.options.resvg = {
+        width: layouts.inspo.props.width,
+        embedFont: true,
+        font: {
+            loadSystemFonts: false,
+            fontFiles: [assets.fonts.italianno.paths.woff.regular],
+        },
+        fitTo: {
+            mode: 'original',
+        },
+    }
+
     const selectedLayout = getRandomIndex(Object.keys(layouts))
-    return makeCompositionImage(selectedLayout.tree, selectedLayout.props.width)
+    return makeCompositionImage(
+        selectedLayout.tree,
+        selectedLayout.props.width,
+        (satori_options = selectedLayout.options.satori),
+        (resvg_options = selectedLayout.options.resvg),
+    )
 }
