@@ -74,6 +74,118 @@ const assets = {
             ),
         },
     },
+    fonts: {
+        national_park: {
+            files: {
+                otf: {
+                    medium: fs.readFileSync(
+                        path.resolve(
+                            path.join(
+                                __dirname,
+                                '..',
+                                'assets',
+                                'fonts',
+                                'national_park',
+                                'medium.otf',
+                            ),
+                        ),
+                    ),
+                    regular: fs.readFileSync(
+                        path.resolve(
+                            path.join(
+                                __dirname,
+                                '..',
+                                'assets',
+                                'fonts',
+                                'national_park',
+                                'regular.otf',
+                            ),
+                        ),
+                    ),
+                },
+            },
+            paths: {
+                woff: {
+                    medium: path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'national_park',
+                        'medium.woff2',
+                    ),
+                    regular: path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'national_park',
+                        'regular.woff2',
+                    ),
+                },
+            },
+        },
+        jacques_francois: {
+            files: {
+                otf: {
+                    regular: fs.readFileSync(
+                        path.resolve(
+                            path.join(
+                                __dirname,
+                                '..',
+                                'assets',
+                                'fonts',
+                                'national_park',
+                                'regular.otf',
+                            ),
+                        ),
+                    ),
+                },
+            },
+            paths: {
+                woff: {
+                    regular: path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'jacques_francois',
+                        'regular.woff2',
+                    ),
+                },
+            },
+        },
+        italianno: {
+            files: {
+                otf: {
+                    regular: fs.readFileSync(
+                        path.resolve(
+                            path.join(
+                                __dirname,
+                                '..',
+                                'assets',
+                                'fonts',
+                                'italianno',
+                                'regular.otf',
+                            ),
+                        ),
+                    ),
+                },
+            },
+            paths: {
+                woff: {
+                    regular: path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'italianno',
+                        'regular.woff2',
+                    ),
+                },
+            },
+        },
+    },
 }
 
 async function makeMotivationImage(quote, author = undefined) {
