@@ -11,7 +11,7 @@ function getBase64(file_path, mime_type = 'image/jpeg') {
 }
 
 const __dirname = path.dirname(__filename)
-var assets = {
+const assets = {
     freedom: {
         path: getBase64('../assets/images/inspiration/freedom.jpg'),
         buffer: fs.readFileSync(
@@ -75,7 +75,7 @@ var assets = {
 }
 
 async function makeMotivationImage(quote, author = undefined) {
-    var layouts = {
+    const layouts = {
         inspo: {
             tree: {
                 type: 'div',
@@ -120,6 +120,10 @@ async function makeMotivationImage(quote, author = undefined) {
             options: {
                 satori: {},
                 resvg: {},
+            },
+            props: {
+                width: '683px',
+                height: '1024px',
             },
         },
         einstein: {
@@ -196,6 +200,10 @@ async function makeMotivationImage(quote, author = undefined) {
                 satori: {},
                 resvg: {},
             },
+            props: {
+                width: '2000px',
+                height: undefined,
+            },
         },
         freedom: {
             tree: {
@@ -240,9 +248,13 @@ async function makeMotivationImage(quote, author = undefined) {
                 satori: {},
                 resvg: {},
             },
+            props: {
+                width: '1133px',
+                height: '1024px',
+            },
         },
     }
 
     const selectedLayout = getRandomIndex(layouts)
-    return makeCompositionImage(selectedLayout.tree, output_width)
+    return makeCompositionImage(selectedLayout.tree, selectedLayout.props.width)
 }
