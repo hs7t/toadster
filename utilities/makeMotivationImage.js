@@ -12,65 +12,67 @@ function getBase64(file_path, mime_type = 'image/jpeg') {
 
 const __dirname = path.dirname(__filename)
 const assets = {
-    freedom: {
-        path: getBase64('../assets/images/inspiration/freedom.jpg'),
-        buffer: fs.readFileSync(
-            path.resolve(
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'images',
-                    'inspiration',
-                    'freedom.jpg',
+    images: {
+        freedom: {
+            path: getBase64('../assets/images/inspiration/freedom.jpg'),
+            buffer: fs.readFileSync(
+                path.resolve(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'images',
+                        'inspiration',
+                        'freedom.jpg',
+                    ),
                 ),
             ),
-        ),
-    },
-    landscape: {
-        path: getBase64('../assets/images/inspiration/landscape.jpg'),
-        buffer: fs.readFileSync(
-            path.resolve(
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'images',
-                    'inspiration',
-                    'landscape.jpg',
+        },
+        landscape: {
+            path: getBase64('../assets/images/inspiration/landscape.jpg'),
+            buffer: fs.readFileSync(
+                path.resolve(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'images',
+                        'inspiration',
+                        'landscape.jpg',
+                    ),
                 ),
             ),
-        ),
-    },
-    einstein: {
-        path: getBase64('../assets/images/inspiration/einstein.jpg'),
-        buffer: fs.readFileSync(
-            path.resolve(
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'images',
-                    'inspiration',
-                    'einstein.jpg',
+        },
+        einstein: {
+            path: getBase64('../assets/images/inspiration/einstein.jpg'),
+            buffer: fs.readFileSync(
+                path.resolve(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'images',
+                        'inspiration',
+                        'einstein.jpg',
+                    ),
                 ),
             ),
-        ),
-    },
-    business: {
-        path: getBase64('../assets/images/inspiration/business.jpg'),
-        buffer: fs.readFileSync(
-            path.resolve(
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'images',
-                    'inspiration',
-                    'business.jpg',
+        },
+        business: {
+            path: getBase64('../assets/images/inspiration/business.jpg'),
+            buffer: fs.readFileSync(
+                path.resolve(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'images',
+                        'inspiration',
+                        'business.jpg',
+                    ),
                 ),
             ),
-        ),
+        },
     },
 }
 
@@ -88,7 +90,7 @@ async function makeMotivationImage(quote, author = undefined) {
                         flexDirection: 'column',
                         alignItems: 'center',
                         gap: '10px',
-                        background: `url(${assets.business.path}) lightgray 50% / cover no-repeat`,
+                        background: `url(${assets.images.business.path}) lightgray 50% / cover no-repeat`,
                     },
                     children: [
                         {
@@ -147,7 +149,7 @@ async function makeMotivationImage(quote, author = undefined) {
                                     alignSelf: 'stretch',
                                     aspectRatio: '634.06/1024.00',
                                 },
-                                src: assets.einstein.path,
+                                src: assets.images.einstein.path,
                             },
                         },
                         {
@@ -217,7 +219,7 @@ async function makeMotivationImage(quote, author = undefined) {
                         justifyContent: 'flex-end',
                         alignItems: 'flex-start',
                         gap: '10px',
-                        background: `url(${assets.freedom.path}) lightgray 50% / cover no-repeat`,
+                        background: `url(${assets.images.freedom.path}) lightgray 50% / cover no-repeat`,
                     },
                     children: [
                         {
