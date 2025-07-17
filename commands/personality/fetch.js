@@ -54,7 +54,10 @@ module.exports = {
         const item = getRandomItem(ITEMS)
         const responseEmbed = new EmbedBuilder()
             .setTitle('toadster has fetched something!')
-            .addFields({ name: item.title, value: item.description })
+            .addFields({
+                name: `${item.emoji} ${item.title}`,
+                value: item.description,
+            })
             .setFooter({ text: `enjoy!` })
             .setTimestamp()
             .setColor('#d1f0ff')
