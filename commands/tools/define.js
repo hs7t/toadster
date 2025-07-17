@@ -37,15 +37,22 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply()
 
-        const query = await interaction.options.getString('term')
+        const query = await interaction.options.getString('term').trim()
 
         var embeds = {
-            merriamWebsterDictionary: new EmbedBuilder()
-                .setFooter({ text: 'from Merriam Webster' })
+            merriamWebster: new EmbedBuilder()
+                .setFooter({
+                    text: 'from the Merriam-Webster Collegiate® Dictionary',
+                    iconURL: 'https://www.merriam-webster.com/favicon.png',
+                })
                 .setColor('#db2b2b')
                 .setTimestamp(),
             urbanDictionary: new EmbedBuilder()
-                .setFooter({ text: 'from Urban Dictionary' })
+                .setFooter({
+                    text: 'from Urban Dictionary',
+                    iconURL:
+                        'https://www.urbandictionary.com/favicon-32x32.png',
+                })
                 .setColor('#eeff00')
                 .setTimestamp(),
         }
@@ -82,11 +89,16 @@ module.exports = {
                     value: responses.urbanDictionary.data[0].date ?? '',
                 },
             )
+        } else {
+            embeds.urbanDictionary.addFields({
+                name: 'not found!',
+                value: `it seems "${query}" isn't a term in this Dictionary`,
+            })
         }
 
         // i know this is bad code but it's the only reliable check apparently
         if (responses.merriamWebsterDictionary.meta) {
-            embeds.merriamWebsterDictionary.addFields(
+            embeds.merriamWebster.addFields(
                 {
                     name:
                         responses.merriamWebsterDictionary[0].hwi.hw.replace(
@@ -110,7 +122,7 @@ module.exports = {
             if (
                 responses.merriamWebsterDictionary[0]?.suppl?.examples?.[0]?.t
             ) {
-                embeds.merriamWebsterDictionary.addFields({
+                embeds.merriamWebster.addFields({
                     name: 'example:',
                     value:
                         cleanMerriam(
@@ -119,9 +131,27 @@ module.exports = {
                         ) ?? '',
                 })
             }
+        } else {
+            embeds.merriamWebster.addFields(
+                {
+                    name: 'not found!',
+                    value: `it seems "${query}" isn't a term in the Collegiate® Dictionary.`,
+                },
+                {
+                    name: 'similar entries:',
+                    value: (() => {
+                        entriesList = ''
+                        i = 0
+                        for (const word of responses.merriamWebsterDictionary) {
+                            if (i <= 5) entriesList += `- ${word}\n`
+                            i++
+                        }
+                        return entriesList
+                    })(),
+                },
+            )
         }
 
-        // console.log(responses.merriamWebsterDictionary)
         await interaction.editReply({
             embeds: Object.values(embeds),
         })

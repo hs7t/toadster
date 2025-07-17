@@ -53,7 +53,11 @@ module.exports = {
         const responseEmbed = new EmbedBuilder()
             .setTitle(answer)
             .setDescription(`result for "${query}"`)
-            .setFooter({ text: 'from Wolfram Alpha' })
+            .setFooter({
+                text: 'from Wolfram Alpha',
+                iconURL:
+                    'https://hc-cdn.hel1.your-objectstorage.com/s/v3/d8cb2fff044f8938b4562652a3fa5d1a103ccddf_spikey.png',
+            })
             .setColor('#f56200')
             .setTimestamp()
 
