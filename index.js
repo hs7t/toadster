@@ -1,19 +1,11 @@
-const {
-    Client,
-    Collection,
-    Events,
-    GatewayIntentBits,
-    MessageFlags,
-} = require('discord.js')
-const path = require('node:path')
-
 const { token } = require('./identity.json')
+const path = require('node:path')
+const { Collection, Events, MessageFlags } = require('discord.js')
+const client = require('./clients/discord.js')
+
 const readCommands = require('./utilities/readCommands.js')
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
-
-const commandsFolderPath = path.join(__dirname, 'commands')
-const commands = readCommands(commandsFolderPath)
+const commands = readCommands(path.join(__dirname, 'commands'))
 client.commands = new Collection(commands.map((cmd) => [cmd.data.name, cmd]))
 
 client.once(Events.ClientReady, (readyClient) => {
