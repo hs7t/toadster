@@ -101,15 +101,9 @@ module.exports = {
             embeds.merriamWebster.addFields(
                 {
                     name:
-                        responses.merriamWebsterDictionary[0].hwi.hw.replace(
-                            '*',
-                            '',
-                        ) ?? '',
+                        responses.merriamWebsterDictionary[0].hwi.hw.replace(/\*/g, '') ?? '',
                     value:
-                        responses.merriamWebsterDictionary[0].hwi.hw.replace(
-                            '*',
-                            '·',
-                        ) ?? '',
+                        responses.merriamWebsterDictionary[0].hwi.hw.replace(/\*/g, '·') ?? '',
                 },
                 {
                     name: responses.merriamWebsterDictionary[0].fl,
