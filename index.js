@@ -10,7 +10,7 @@ const commands = readCommands(path.join(__dirname, 'commands'))
 client.commands = new Collection(commands.map((cmd) => [cmd.data.name, cmd]))
 
 client.once(Events.ClientReady, (readyClient) => {
-    console.log(`Ready! Logged in as ${readyClient.user.tag}`)
+    console.log(`logged in as ${readyClient.user.tag}!`)
 })
 
 client.login(token)
