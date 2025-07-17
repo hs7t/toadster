@@ -97,7 +97,7 @@ module.exports = {
         }
 
         // i know this is bad code but it's the only reliable check apparently
-        if (responses.merriamWebsterDictionary.meta) {
+        if (responses.merriamWebsterDictionary[0].meta) {
             embeds.merriamWebster.addFields(
                 {
                     name:
