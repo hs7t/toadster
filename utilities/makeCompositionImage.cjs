@@ -54,48 +54,51 @@ module.exports = async function makeCompositionImage(
         ),
     }
 
-    satori_options = satori_options ?? {
-        width: img_width,
-        embedFont: true,
-        fonts: [
-            {
-                name: 'National Park',
-                data: satoriFonts.regular,
-                weight: 400,
-            },
-            {
-                name: 'National Park',
-                data: satoriFonts.medium,
-                weight: 500,
-            },
-        ],
-    }
-
-    resvg_options = resvg_options ?? {
-        font: {
-            loadSystemFonts: false,
-            fontFiles: [
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'fonts',
-                    'national_park',
-                    'medium.woff2',
-                ),
-                path.join(
-                    __dirname,
-                    '..',
-                    'assets',
-                    'fonts',
-                    'national_park',
-                    'regular.woff2',
-                ),
+    if (satori_options == undefined) {
+        satori_options = {
+            width: img_width,
+            embedFont: true,
+            fonts: [
+                {
+                    name: 'National Park',
+                    data: satoriFonts.regular,
+                    weight: 400,
+                },
+                {
+                    name: 'National Park',
+                    data: satoriFonts.medium,
+                    weight: 500,
+                },
             ],
-            fitTo: {
-                mode: 'original',
+        }
+    }
+    if (resvg_options == undefined) {
+        resvg_options = resvg_options ?? {
+            font: {
+                loadSystemFonts: false,
+                fontFiles: [
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'national_park',
+                        'medium.woff2',
+                    ),
+                    path.join(
+                        __dirname,
+                        '..',
+                        'assets',
+                        'fonts',
+                        'national_park',
+                        'regular.woff2',
+                    ),
+                ],
+                fitTo: {
+                    mode: 'original',
+                },
             },
-        },
+        }
     }
 
     const satoriSvg = await generateSatoriSvg(composition_tree, satori_options)
