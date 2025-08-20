@@ -1,6 +1,6 @@
 const { REST, Routes } = require('discord.js')
 const readCommands = require('../utilities/readCommands.js')
-const { clientId, guildId, token } = require('../identity.json')
+const { clientId, token } = require('../identity.json')
 const path = require('node:path')
 
 const commandsFolderPath = path.join(__dirname, '..', 'commands')
@@ -14,10 +14,9 @@ const rest = new REST().setToken(token)
     try {
         console.log(`deploying ${commands.length} slash commands...`)
 
-        const data = await rest.put(
-            Routes.applicationGuildCommands(clientId, guildId),
-            { body: commands },
-        )
+        const data = await rest.put(Routes.applicationCommands(clientId), {
+            body: commands,
+        })
 
         console.log(`successfully deployed ${data.length} slash commands!`)
     } catch (error) {

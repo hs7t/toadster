@@ -2,8 +2,8 @@ const { token } = require('./identity.json')
 const path = require('node:path')
 const { Collection, Events, MessageFlags } = require('discord.js')
 const client = require('./clients/discord.js')
-const handleCommand = require('./utilities/handleCommand.js')
 
+const handleCommand = require('./utilities/handleCommand.js')
 const readCommands = require('./utilities/readCommands.js')
 
 const commands = readCommands(path.join(__dirname, 'commands'))
