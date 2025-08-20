@@ -8,7 +8,7 @@ toadster is a pretty fun Discord bot! It has a few commands:
 - `/soothsay` - tells you what the future holds
 - `/answer` - responds to a query using the Wolfram Alpha Short Answers API
 - `/define` - defines a word using dictionaries from Merriam-Webster and Urban Dictionary
-- `/frame` - frames a message
+- `/frame` - frames a message (text only)
 - `/binary` - turns text into ones and zeroes
 - `/rotate` - rotates all letters in some text
 - `/funky` - gIvEs yOu tExT lIkE tHiS
